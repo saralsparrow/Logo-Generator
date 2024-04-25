@@ -1,5 +1,5 @@
 // Import necessary functions/classes from the lib folder
-const { createLogo } = require('./lib/logo');
+const createLogo = require('./lib/logo');
 const inquirer = require("inquirer")
 const fs = require('fs');
 // const prompt = require('prompt-sync')();
@@ -27,16 +27,16 @@ function runApplication() {
                 message: "Enter shape color (keyword or hexadecimal): "
             }
         ])
-        .then(() => {
+        .then((answers) => {
             // Use user feedback for... whatever!!
-            fs.writeFileSync('logo.svg', createLogo(text, textColor, shape, shapeColor));
+            fs.writeFileSync('logo.svg', createLogo(answers.text, answers.textColor, answers.shape, answers.shapeColor));
             console.log('Generated logo.svg');
         })
         .catch((error) => {
             if (error.isTtyError) {
-            // Prompt couldn't be rendered in the current environment
+            console.log("Prompt couldn't be rendered in the current environment");
             } else {
-            // Something else went wrong
+            console.log("Something else went wrong");
             }
         });
 }
